@@ -242,6 +242,7 @@ Properties of the neutron or X-ray beam.
 | sensor_thickness@units | NX_LENGTH | `"m"` |
 | [serial_number](https://manual.nexusformat.org/classes/base_classes/NXdetector.html#nxdetector-serial-number-field) | NX_CHAR | Serial number of the detector. |
 | [start_time](https://manual.nexusformat.org/classes/base_classes/NXdetector.html#nxdetector-start-time-field) | NX_FLOAT[nP] | Relative start time for each frame, with `/entry/start_time` as absolute reference. |
+| [type](https://manual.nexusformat.org/classes/applications/NXmx.html#nxmx-entry-instrument-detector-type-field) | NX_CHAR | Detector type, this is always `"HPC"`, short for hybrid photon counting detector. |
 | [virtual_pixel_interpolation_applied](https://manual.nexusformat.org/classes/applications/NXmx.html#nxmx-entry-instrument-detector-virtual-pixel-interpolation-applied-field) | NX_BOOLEAN | Indicates whether virtual pixel interpolation has been applied. |
 | [x_pixel_size](https://manual.nexusformat.org/classes/base_classes/NXdetector.html#nxdetector-x-pixel-size-field) | NX_FLOAT | Size of a single pixel along the x-axis of the detector. |
 | x_pixel_size@units | NX_LENGTH | `"m"` |
