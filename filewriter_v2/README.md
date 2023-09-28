@@ -88,7 +88,7 @@ data: NXdata
   @channel_indices = 1
   image_id = [1, ..., nP]
   channel = ["threshold_1", "threshold_2", "difference"]
-  data = uint[i, j]
+  data = uint[nP, nC, i, j]
 
 detector: NXdetector
   ...
