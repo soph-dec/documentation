@@ -297,13 +297,13 @@ Geometry and logical description of a detector module. In our case, the full dat
 | [data_origin](https://manual.nexusformat.org/classes/applications/NXmx.html#nxmx-entry-instrument-detector-detector-module-data-origin-field) | NX_INT[2] | Indices of the data origin. The order of indices is slow to fast. |
 | [data_size](https://manual.nexusformat.org/classes/applications/NXmx.html#nxmx-entry-instrument-detector-detector-module-data-size-field) | NX_INT[2] | Size of one channel image in pixels, the order of indices is slow to fast. |
 | [fast_pixel_direction](https://manual.nexusformat.org/classes/applications/NXmx.html#nxmx-entry-instrument-detector-detector-module-fast-pixel-direction-field) | NX_NUMBER |  Size of a pixel along the fastest varying pixel direction. |
-| [fast_pixel_direction@depends_on](https://manual.nexusformat.org/classes/applications/NXmx.html#nxmx-entry-instrument-detector-detector-module-fast-pixel-direction-depends-on-attribute) | NX_CHAR | `"/entry/instrument/detector/transformations/translation"` |
+| [fast_pixel_direction@depends_on](https://manual.nexusformat.org/classes/applications/NXmx.html#nxmx-entry-instrument-detector-detector-module-fast-pixel-direction-depends-on-attribute) | NX_CHAR | Points to the transformations in `"/entry/instrument/detector/geometry"`. |
 | [fast_pixel_direction@offset](https://manual.nexusformat.org/classes/applications/NXmx.html#nxmx-entry-instrument-detector-detector-module-fast-pixel-direction-offset-attribute) | NX_NUMBER[3] | A fixed offset applied before the transformation. |
 | [fast_pixel_direction@transformation_type](https://manual.nexusformat.org/classes/applications/NXmx.html#nxmx-entry-instrument-detector-detector-module-fast-pixel-direction-transformation-type-attribute) | NX_CHAR | `"translation"` |
 | fast_pixel_direction@units | NX_LENGTH | `"m"` |
 | [fast_pixel_direction@vector](https://manual.nexusformat.org/classes/applications/NXmx.html#nxmx-entry-instrument-detector-detector-module-fast-pixel-direction-vector-attribute) | NX_NUMBER[3] | Unit vector describing the fastest varying pixel direction. |
 | [slow_pixel_direction](https://manual.nexusformat.org/classes/applications/NXmx.html#nxmx-entry-instrument-detector-detector-module-slow-pixel-direction-field) | NX_NUMBER | Size of a pixel along the slowest varying pixel direction. |
-| [slow_pixel_direction@depends_on](https://manual.nexusformat.org/classes/applications/NXmx.html#nxmx-entry-instrument-detector-detector-module-slow-pixel-direction-depends-on-attribute) | NX_CHAR | `"/entry/instrument/detector/transformations/translation"` |
+| [slow_pixel_direction@depends_on](https://manual.nexusformat.org/classes/applications/NXmx.html#nxmx-entry-instrument-detector-detector-module-slow-pixel-direction-depends-on-attribute) | NX_CHAR | Points to the transformations in `"/entry/instrument/detector/geometry"`. |
 | [slow_pixel_direction@offset](https://manual.nexusformat.org/classes/applications/NXmx.html#nxmx-entry-instrument-detector-detector-module-slow-pixel-direction-offset-attribute) | NX_NUMBER[3] | A fixed offset applied before the transformation. |
 | [slow_pixel_direction@transformation_type](https://manual.nexusformat.org/classes/applications/NXmx.html#nxmx-entry-instrument-detector-detector-module-slow-pixel-direction-transformation-type-attribute) | NX_CHAR | `"translation"` |
 | slow_pixel_direction@units | NX_LENGTH | `"m"` |
@@ -315,14 +315,7 @@ Geometry and logical description of a detector module. In our case, the full dat
 |---|---|---|
 |  |  |
 | @NX_class | NX_CHAR | [`"NXtransformations"`](https://manual.nexusformat.org/classes/base_classes/NXtransformations.html#nxtransformations) |
-| translation | NX_FLOAT | Distance from the sample to the detector. |
-| translation@depends_on | NX_CHAR | `"."` |
-| translation@offset | NX_NUMBER[3] | A fixed offset applied before the transformation. |
-| translation@transformation_type | NX_CHAR | `"translation"` |
-| translation@units | NX_LENGTH | `"m"` |
-| translation@vector | NX_NUMBER[3] | Unit vector describing the direction of the translation from the sample to the detector. |
 | two_theta | NX_FLOAT[nP] | Starting $2\theta$ value for each frame. |
-| two_theta@offset | NX_NUMBER[3] | A fixed offset applied before the transformation. |
 | two_theta@transformation_type | NX_CHAR | `"rotation"` |
 | two_theta@units | NX_ANGLE | `"degree"` |
 | two_theta@vector | NX_NUMBER[3] | Unit vector describing the axis of the rotation. |
@@ -330,7 +323,6 @@ Geometry and logical description of a detector module. In our case, the full dat
 | two_theta_end@units | NX_ANGLE | `"degree"` |
 | two_theta_increment_set | NX_FLOAT | The intended average range through which $2\theta$ moves during the exposure of a frame. |
 | two_theta_increment_set@units | NX_ANGLE | `"degree"` |
-
 
 
 ## [/entry/sample](https://manual.nexusformat.org/classes/applications/NXmx.html#nxmx-entry-sample-group)
