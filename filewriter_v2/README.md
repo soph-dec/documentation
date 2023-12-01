@@ -164,6 +164,7 @@ The top-level NeXus group contains all the data and associated information that 
 | @NX_class | NX_CHAR | [`"NXentry"`](https://manual.nexusformat.org/classes/base_classes/NXentry.html#nxentry)
 | [@default](https://manual.nexusformat.org/classes/base_classes/NXentry.html#nxentry-default-attribute) | NX_CHAR | Declares which NXdata group contains the data to be shown by default. |
 | [@version](https://manual.nexusformat.org/classes/applications/NXmx.html#nxmx-entry-version-attribute) | NX_CHAR | Describes the version of the NXmx definition used to write this data. |
+| @DECTRIS_lab_geometry | NX_CHAR | DECTRIS specific attribute that specifies the coordinate system used. Fixed to "mcstas", which is the system used in NeXus. |
 | [definition](https://manual.nexusformat.org/classes/applications/NXmx.html#nxmx-entry-definition-field) | NX_CHAR | NeXus NXDL schema to which this file conforms, `"NXmx"`. |
 | [end_time_estimated](https://manual.nexusformat.org/classes/applications/NXmx.html#nxmx-entry-end-time-estimated-field) | NX_DATE_TIME | Estimated time/date of the last data point collected in UTC, following ISO 8601 with suffix Z. Note that the time zone of the beamline is provided in `/entry/instrument/time_zone`. |
 | [program_name](https://manual.nexusformat.org/classes/base_classes/NXentry.html#nxentry-program-name-field) | NX_CHAR | Name of the program used to generate this file, `"DECTRIS-DAQ"`.
