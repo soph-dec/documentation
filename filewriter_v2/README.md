@@ -86,6 +86,7 @@ data: NXdata
   @axes = ["image_id", "channel", ".", "."]
   @image_id_indices = 0
   @channel_indices = 1
+  @default_slice = [".", "threshold_1", ".", "."]
   image_id = [1, ..., nP]
   channel = ["threshold_1", "threshold_2", "difference"]
   data = uint[nP, nC, i, j]
@@ -183,6 +184,7 @@ Describes the plottable data and related dimension scales. Please also refer to 
 | [@start_time_indices](https://manual.nexusformat.org/classes/base_classes/NXdata.html#nxdata-axisname-indices-attribute) | NX_INT | Indicates the dependency relationship of the `start_time` field with a dimension of the data, in this case `0`.
 | [@channel_indices](https://manual.nexusformat.org/classes/base_classes/NXdata.html#nxdata-axisname-indices-attribute) | NX_INT | Indicates the dependency relationship of the `channel` field with a dimension of the data, in this case `1`.
 | [@signal](https://manual.nexusformat.org/classes/base_classes/NXdata.html#nxdata-signal-attribute) | NX_CHAR | Declares which field is the default to be plotted, `"data"`. |
+| @default_slice | NX_CHAR_OR_NUMBER | Defines which slice of data should be shown in a plot by default. |
 | [image_id](https://manual.nexusformat.org/classes/base_classes/NXdata.html#nxdata-axisname-field) | NX_NUMBER[] | Dimension scale defining the axis `image_id` of the data, typically this is `[1, ..., nP]`. |
 | [start_time](https://manual.nexusformat.org/classes/base_classes/NXdata.html#nxdata-axisname-field) | NX_NUMBER[] | Dimension scale defining the axis `start_time` of the data. These are the relative start times for all images with absolute reference `/entry/start_time`. |
 | [channel](https://manual.nexusformat.org/classes/base_classes/NXdata.html#nxdata-axisname-field) | NX_CHAR[][^2] | Dimension scale defining the axis `channel` of the data. These are the enabled channels, for example `["threshold_1", "threshold_2", "difference"]`. |
