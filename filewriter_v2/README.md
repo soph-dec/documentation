@@ -321,7 +321,7 @@ Geometry and logical description of a detector module. In our case, the full dat
 | two_theta | NX_FLOAT[nP] | Starting $2\theta$ value for each frame. |
 | two_theta@transformation_type | NX_CHAR | `"rotation"` |
 | two_theta@units | NX_ANGLE | `"degree"` |
-| two_theta@vector | NX_NUMBER[3] | Unit vector describing the axis of the rotation. |
+| two_theta@vector | NX_NUMBER[3] | $2\theta$ rotation axis given as a three-dimensional unit vector in a right-handed system. |
 | two_theta_end | NX_FLOAT[nP] | $2\theta$ end value for each frame. |
 | two_theta_end@units | NX_ANGLE | `"degree"` |
 | two_theta_increment_set | NX_FLOAT | The intended average range through which $2\theta$ moves during the exposure of a frame. |
@@ -347,29 +347,37 @@ Group containing sample goniometer and other related axes.
 |---|---|---|
 | @NX_class | NX_CHAR | [`"NXtransformations"`](https://manual.nexusformat.org/classes/base_classes/NXtransformations.html#nxtransformations) |
 | chi | NX_FLOAT[nP] | Starting $\chi$ value for each frame. |
+| chi@depends_on | NX_CHAR | Points to the next transformation in execution order or `"."`. |
+| chi@transformation_type | NX_CHAR | `"rotation"` |
 | chi@units | NX_ANGLE | `"degree"` |
+| chi@vector | NX_NUMBER[3] | $\chi$ rotation axis given as a three-dimensional unit vector in a right-handed system. |
 | chi_end | NX_FLOAT[nP] | $\chi$ end value for each frame. |
 | chi_end@units | NX_ANGLE | `"degree"` |
 | chi_increment_set | NX_NUMBER | The intended average range through which $\chi$ moves during the exposure of a frame. |
 | chi_increment_set@units | NX_ANGLE | `"degree"` |
 | kappa | NX_FLOAT[nP] | Starting $\kappa$ value for each frame. |
+| kappa@depends_on | NX_CHAR | Points to the next transformation in execution order or `"."`. |
+| kappa@transformation_type | NX_CHAR | `"rotation"` |
 | kappa@units | NX_ANGLE | `"degree"` |
+| kappa@vector | NX_NUMBER[3] | $\kappa$ rotation axis given as a three-dimensional unit vector in a right-handed system. |
 | kappa_end | NX_FLOAT[nP] | $\kappa$ end value for each frame. |
 | kappa_end@units | NX_ANGLE | `"degree"` |
 | kappa_increment_set | NX_NUMBER | The intended average range through which $\kappa$ moves during the exposure of a frame. |
 | kappa_increment_set@units | NX_ANGLE | `"degree"` |
 | omega | NX_FLOAT[nP] | Starting $\omega$ value for each frame. |
-| omega@depends_on | NX_CHAR | `"."` |
-| omega@offset | NX_NUMBER[3] | A fixed offset applied before the transformation. |
+| omega@depends_on | NX_CHAR | Points to the next transformation in execution order or `"."`. |
 | omega@transformation_type | NX_CHAR | `"rotation"` |
 | omega@units | NX_ANGLE | `"degree"` |
-| omega@vector | NX_NUMBER[3] | Unit vector describing the axis of the rotation. |
+| omega@vector | NX_NUMBER[3] | $\omega$ rotation axis given as a three-dimensional unit vector in a right-handed system. |
 | omega_end | NX_FLOAT[nP] | $\omega$ end value for each frame. |
 | omega_end@units | NX_ANGLE | `"degree"` |
 | omega_increment_set | NX_FLOAT | The intended average range through which $\omega$ moves during the exposure of a frame. |
 | omega_increment_set@units | NX_ANGLE | `"degree"` |
 | phi | NX_FLOAT[nP] | Starting $\phi$ value for each frame. |
+| phi@depends_on | NX_CHAR | Points to the next transformation in execution order or `"."`. |
+| phi@transformation_type | NX_CHAR | `"rotation"` |
 | phi@units | NX_ANGLE | `"degree"` |
+| phi@vector | NX_NUMBER[3] | $\phi$ rotation axis given as a three-dimensional unit vector in a right-handed system. |
 | phi_end | NX_FLOAT[nP] | $\phi$ end value for each frame. |
 | phi_end@units | NX_ANGLE | `"degree"` |
 | phi_increment_set | NX_NUMBER | The intended average range through which $\phi$ moves during the exposure of a frame. |
