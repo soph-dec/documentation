@@ -285,7 +285,7 @@ Please also refer to the [_NXtransformations_](https://manual.nexusformat.org/cl
 | orientation@units | NX_CHAR | `"rad"` |
 | orientation@vector | NX_FLOAT[3] | Unit vector describing the axis of the rotation. |
 | translation | NX_FLOAT | Distance from the sample to the detector. |
-| translation@depends_on | NX_CHAR | The transformation chain begins here, therefore this is `"."`. |
+| translation@depends_on | NX_CHAR | Either points to the next transformation in the execution chain (in case there is a $2\theta$ rotation set in the [transformations group](#entryinstrumentdetectortransformations)) or `"."`. |
 | translation@transformation_type | NX_CHAR | `"translation"` |
 | translation@units | NX_CHAR | `"m"` |
 | translation@vector | NX_FLOAT[3] | Unit vector describing the direction of the translation from the sample to the detector. |
@@ -319,6 +319,7 @@ Geometry and logical description of a detector module. In our case, the full dat
 |  |  |
 | @NX_class | NX_CHAR | [`"NXtransformations"`](https://manual.nexusformat.org/classes/base_classes/NXtransformations.html#nxtransformations) |
 | two_theta | NX_FLOAT[nP] | Starting $2\theta$ value for each frame. |
+| two_theta@depends_on | NX_CHAR | `"."` |
 | two_theta@transformation_type | NX_CHAR | `"rotation"` |
 | two_theta@units | NX_ANGLE | `"degree"` |
 | two_theta@vector | NX_NUMBER[3] | $2\theta$ rotation axis given as a three-dimensional unit vector in a right-handed system. |
