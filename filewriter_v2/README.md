@@ -208,11 +208,18 @@ Properties of the neutron or X-ray beam.
 |---|---|---|
 | @NX_class | NX_CHAR | [`"NXbeam"`](https://manual.nexusformat.org/classes/base_classes/NXbeam.html#nxbeam) |
 | [incident_energy](https://manual.nexusformat.org/classes/base_classes/NXbeam.html#nxbeam-incident-energy-field) | NX_FLOAT | Energy carried by each particle of the beam on entering the beamline component. |
+| [@flux](https://manual.nexusformat.org/classes/applications/NXmx.html#nxmx-entry-instrument-beam-flux-attribute) | NX_CHAR | Which field contains the measured flux. One of `"flux"`, `"total_flux"`, `"flux_integrated"`, or `"total_flux_integrated"`. |
 | incident_energy@units | NX_ENERGY | `"eV"` |
 | [incident_wavelength](https://manual.nexusformat.org/classes/applications/NXmx.html#nxmx-entry-instrument-beam-incident-wavelength-field) | NX_FLOAT | Wavelength of the beam in the case of monochromatic beam. |
 | incident_wavelength@units | NX_WAVELENGTH | `"angstrom"` |
-| [total_flux](https://manual.nexusformat.org/classes/applications/NXmx.html#nxmx-entry-instrument-beam-total-flux-field) | NX_FLOAT | Flux incident on beam plane in photons per second. In other words, this is the flux integrated over the area. In the case of a beam that varies in flux shot-to-shot, this is an array of values, one for each recorded shot.|
+| [flux](https://manual.nexusformat.org/classes/applications/NXmx.html#nxmx-entry-instrument-beam-flux-field) | NX_FLOAT | Flux density incident on beam plane area in photons per second per unit area. In the case of a beam that varies in flux shot-to-shot, this is an array of values, one for each recorded shot. This value is set with the SIMPLON API keys `flux_type = "flux"` and `flux_value`. |
+| flux@units | NX_FLUX | `"1/s/cm^2"` |
+| [total_flux](https://manual.nexusformat.org/classes/applications/NXmx.html#nxmx-entry-instrument-beam-total-flux-field) | NX_FLOAT | Flux incident on beam plane in photons per second. In other words, this is the flux integrated over the area. In the case of a beam that varies in flux shot-to-shot, this is an array of values, one for each recorded shot. This value is set with the SIMPLON API keys `flux_type = "flux_area_integrated"` and `flux_value`. |
 | total_flux@units | NX_FREQUENCY | `"Hz"` |
+| [flux_integrated](https://manual.nexusformat.org/classes/applications/NXmx.html#nxmx-entry-instrument-beam-flux-integrated-field) | NX_FLOAT | Flux density incident on beam plane area in photons per unit area. In other words this is the flux integrated over time. In the case of a beam that varies in flux shot-to-shot, this is an array of values, one for each recorded shot.  This value is set with the SIMPLON API keys `flux_type = "flux_time_integrated"` and `flux_value`. |
+| flux_integrated@units | NX_PER_AREA | `"1/cm^2"` |
+| [total_flux_integrated](https://manual.nexusformat.org/classes/applications/NXmx.html#nxmx-entry-instrument-beam-total-flux-integrated-field) | NX_FLOAT | Flux incident on beam plane in photons. In other words this is the flux integrated over time and area. In the case of a beam that varies in total flux shot-to-shot, this is an array of values, one for each recorded shot. This value is set with the SIMPLON API keys `flux_type = "flux_area_and_time_integrated"` and `flux_value`. |
+| total_flux_integrated@units | NX_DIMENSIONLESS | `"s*cm^2/s/cm^2"` |
 
 ## [/entry/instrument/detector](https://manual.nexusformat.org/classes/applications/NXmx.html#nxmx-entry-instrument-detector-group)
 
