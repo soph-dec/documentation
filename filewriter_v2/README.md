@@ -1,24 +1,11 @@
 # FileWriter V2
 
----
-
-> **Warning**
->
-> FileWriter V2 is currently in a preview state and **will change** in the future.
-
-Feedback is very welcome!
-
----
-
-FileWriter writes image data and metadata to [HDF5](https://www.hdfgroup.org/solutions/hdf5/) files. Currently, there are two different formats available. V1 is a legacy format that follows [version 1.4](https://github.com/nexusformat/definitions/releases/tag/NXmx-1.4) of the _NXmx application definition_ of the [NeXus](https://manual.nexusformat.org) format. V2 follows the [_NXmx application definition_](https://manual.nexusformat.org/classes/applications/NXmx.html) of NeXus Version 2022.07, with the addition of multi-channel data support[^1].
+FileWriter writes image data and metadata to [HDF5](https://www.hdfgroup.org/solutions/hdf5/) files. Currently, there are two different formats available. V1 is a legacy format that follows [version 1.4](https://github.com/nexusformat/definitions/releases/tag/NXmx-1.4) of the _NXmx application definition_ of the [NeXus](https://manual.nexusformat.org) format. V2 follows the [_NXmx application definition_](https://manual.nexusformat.org/classes/applications/NXmx.html) of NeXus Version 2024.02.
 
 | Version | Configuration | NeXus/NXmx Version | Multi-Channel Data |
 |----|----|----|----|
 | V1 | SIMPLON | [NeXus 3.2 NXmx (2016)](https://github.com/nexusformat/definitions/blob/main/legacy_docs/nexus-v3.2-2016-11-22-32b130a.pdf) | No |
-| V2 | SIMPLON | [NeXus 2022.07 NXmx](https://github.com/nexusformat/definitions/blob/v2022.07/applications/NXmx.nxdl.xml) | Yes |
-
-[^1]: This is not part of the NeXus standard yet, a detailed PR will be opened when this data format has been approved by the community. The general idea of this representation has already been discussed and approved by the NIAC though, see this [issue](https://github.com/nexusformat/definitions/issues/940).
-
+| V2 | SIMPLON | [NeXus v2024.02 NXmx](https://github.com/nexusformat/definitions/blob/v2024.02/applications/NXmx.nxdl.xml) | Yes |
 
 ## FileWriter V2 Configuration
 
@@ -35,7 +22,7 @@ The configuration interface is accessible at `http://<ADDRESS_OF_DCU>/filewriter
 | `image_nr_start` | number | `1` | Unsigned integer defining the first image id on the axis `/entry/image_id`. |
 | `name_pattern` | string | `"series_$id"` | Base name of the files. `$id` will be replaced by the series id, i.e. using the default, the generated files will have the names:<br> `series_<series_id>_master.h5`<br> `series_<series_id>_data_<file_number>.h5`|
 | `nimages_per_file` | number | `1000` | Unsigned integer defining the maximum number of images stored in each data file. If set to `0`, all images are stored directly in the master file and no data files are created. If set to a value greater than zero, the images are stored in multiple data files. |
-| `v2_preview_enabled` | boolean | `false` | Enabled state of the FileWriter V2 preview. <br>**NOTE:** This key will be replaced when FileWriter V2 is released. There will likely be a `format` key instead, in analogy to Stream V2. |
+| `format` | string | `"hdf5 nexus legacy nxmx"` | Format of the files.<br /><ul><li>`"hdf5 nexus legacy nxmx"`: HDF5 files where the metadata of the master file is following the NXmx application definition of the NeXus 3.2 (2016) standard. (FileWriter V1).</li><li>`"hdf5 nexus v2024.2 nxmx"`: HDF5 files where the metadata of the master file is following the NXmx application definition of the NeXus v2024.2 standard. (FileWriter V2).</li></ul> |
 
 ### Example
 
@@ -45,7 +32,7 @@ FileWriter V2 may be configured with cURL.
 curl \
     -X PUT \
     -H "Content-Type: application/json" \
-    -d '{"mode": {"value": "enabled"}, "v2_preview_enabled": {"value": true}}' \
+    -d '{"mode": {"value": "enabled"}, "format": {"value": "hdf5 nexus v2024.2 nxmx"}}' \
     $ADDRESS_OF_DCU/filewriter/api/1.8.0/config
 ```
 
@@ -70,11 +57,9 @@ For further details on available commands and status parameters please refer to 
 
 ## Multi-Channel Data
 
-One of the main new features of FileWriter V2 is the support of multi-channel data, i.e. each image consists of multiple channels, one per enabled threshold/difference mode. The dataset `/entry/data/data` is four-dimensional with shape `[nP, nC, i, j]`, the notation used is defined [here](#notation). The channels are identified via strings given in the `channel` [axis](https://manual.nexusformat.org/classes/base_classes/NXdata.html#nxdata-axisname-field) of the _NXdata_ class[^2]. For every channel name listed in this field, there exists a subgroup of the [_NXdetector_](https://manual.nexusformat.org/classes/base_classes/NXdetector.html) group of type _NXdetector_channel_[^1] with the same name followed by the suffix `_channel`. This group contains channel-specific metadata, for example `threshold_energy`, `flatfield` or `pixel_mask`.
+One of the main new features of FileWriter V2 is the support of multi-channel data, i.e. each image consists of multiple channels, one per enabled threshold/difference mode. The dataset `/entry/data/data` is four-dimensional with shape `[nP, nC, i, j]`, the notation used is defined [here](#notation). The channels are identified via strings given in the `channel` [axis](https://manual.nexusformat.org/classes/base_classes/NXdata.html#nxdata-axisname-field) of the _NXdata_ class. For every channel name listed in this field, there exists a subgroup of the [_NXdetector_](https://manual.nexusformat.org/classes/base_classes/NXdetector.html) group of type [_NXdetector_channel_](https://manual.nexusformat.org/classes/base_classes/NXdetector_channel.html#nxdetector-channel) with the same name followed by the suffix `_channel`. This group contains channel-specific metadata, for example `threshold_energy`, `flatfield` or `pixel_mask`.
 
 An _NXdetector_channel_ group could contain every field that is allowed for NXdetector and that makes sense to be given per channel.
-
-[^2]: Currently, _AXISNAME_ is defined to be of type [_NX_NUMBER_](https://manual.nexusformat.org/nxdl-types.html#nx-number), but there is an [open PR](https://github.com/nexusformat/NIAC/issues/97) to allow [_NX_CHAR_](https://manual.nexusformat.org/nxdl-types.html#nx-char) as well.
 
 #### Example
 
@@ -120,9 +105,9 @@ A FileWriter V2 file is structured into the following (HDF5) groups:
     |   +-- beam
     |   +-- detector
     |       |
-    |       +-- threshold_1_channel*
-    |       +-- threshold_2_channel*
-    |       +-- difference_channel*
+    |       +-- threshold_1_channel
+    |       +-- threshold_2_channel
+    |       +-- difference_channel
     |       +-- geometry
     |       +-- module
     |       +-- transformations
@@ -134,7 +119,6 @@ A FileWriter V2 file is structured into the following (HDF5) groups:
     |
     +-- source
 ```
-\* this is not part of the NeXus standard yet, see [Multi-Channel Data](#multi-channel-data).
 
 ## List of Fields
 
@@ -187,7 +171,7 @@ Describes the plottable data and related dimension scales. Please also refer to 
 | @default_slice | NX_CHAR_OR_NUMBER | Defines which slice of data should be shown in a plot by default. |
 | [image_id](https://manual.nexusformat.org/classes/base_classes/NXdata.html#nxdata-axisname-field) | NX_CHAR_OR_NUMBER[] | Dimension scale defining the axis `image_id` of the data, typically this is `[1, ..., nP]`. |
 | [start_time](https://manual.nexusformat.org/classes/base_classes/NXdata.html#nxdata-axisname-field) | NX_CHAR_OR_NUMBER[] | Dimension scale defining the axis `start_time` of the data. These are the relative start times for all images with absolute reference `/entry/start_time`. |
-| [channel](https://manual.nexusformat.org/classes/base_classes/NXdata.html#nxdata-axisname-field) | NX_CHAR_OR_NUMBER[][^2] | Dimension scale defining the axis `channel` of the data. These are the enabled channels, for example `["threshold_1", "threshold_2", "difference"]`. |
+| [channel](https://manual.nexusformat.org/classes/base_classes/NXdata.html#nxdata-axisname-field) | NX_CHAR_OR_NUMBER[] | Dimension scale defining the axis `channel` of the data. These are the enabled channels, for example `["threshold_1", "threshold_2", "difference"]`. |
 | [data](https://manual.nexusformat.org/classes/applications/NXmx.html#nxmx-entry-data-data-field) | NX_NUMBER[nP,nC,i,j] | The image data.<br> **Note:** Files in V2 format always have only one `"/entry/data/data"` dataset, even in case `nimages_per_file` is greater than `0`. This is because it is a [Virtual Dataset](https://portal.hdfgroup.org/display/HDF5/Virtual+Dataset++-+VDS). |
 
 ## [/entry/instrument](https://manual.nexusformat.org/classes/applications/NXmx.html#nxmx-entry-instrument-group)
@@ -260,13 +244,13 @@ Properties of the neutron or X-ray beam.
 | y_pixel_size@units | NX_LENGTH | `"m"` |
 
 
-## /entry/instrument/detector/CHANNELNAME_channel
+## [/entry/instrument/detector/CHANNELNAME_channel](https://manual.nexusformat.org/classes/applications/NXmx.html#nxmx-entry-instrument-detector-channelname-channel-group)
 
 For every channel enabled, there will be one _NXdetector_channel_ group containing metadata specific to that channel. For further details see [Multi-Channel Data](#multi-channel-data).
 
 | Name | NeXus Type | Description |
 |---|---|---|
-| @NX_class | NX_CHAR | `"NXdetector_channel"` |
+| @NX_class | NX_CHAR | [`"NXdetector_channel"`](https://manual.nexusformat.org/classes/base_classes/NXdetector.html#nxdetector-channelname-channel-group) |
 | flatfield | NX_FLOAT[] | The flatfield applied to the channel data. |
 | pixel_mask | NX_UINT[] | The pixel mask applied to the channel data. |
 | threshold_energy | NX_FLOAT or NX_FLOAT[2] | The threshold energy for this channel. In case of difference mode, this is an array containing both the upper and lower threshold energies. |
