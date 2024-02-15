@@ -275,11 +275,11 @@ Please also refer to the [_NXtransformations_](https://manual.nexusformat.org/cl
 | orientation@transformation_type | NX_CHAR | `"rotation"` |
 | orientation@units | NX_CHAR | `"rad"` |
 | orientation@vector | NX_FLOAT[3] | Unit vector describing the axis of the rotation. |
-| translation | NX_FLOAT | Distance from the sample to the detector. |
+| translation | NX_FLOAT | Length of the tranlslation. |
 | translation@depends_on | NX_CHAR | Either points to the next transformation in the execution chain (in case there is a $2\theta$ rotation set in the [transformations group](#entryinstrumentdetectortransformations)) or `"."`. |
 | translation@transformation_type | NX_CHAR | `"translation"` |
 | translation@units | NX_CHAR | `"m"` |
-| translation@vector | NX_FLOAT[3] | Unit vector describing the direction of the translation from the sample to the detector. |
+| translation@vector | NX_FLOAT[3] | Unit vector describing the direction of the translation. |
 
 ## [/entry/instrument/detector/module](https://manual.nexusformat.org/classes/applications/NXmx.html#nxmx-entry-instrument-detector-detector-module-group)
 
