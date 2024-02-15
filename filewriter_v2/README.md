@@ -263,7 +263,7 @@ This group contains information on the orientation and position of the detector.
 Given a pixel with detector coordinates $P^{'}$, lab coordinates $P$ can be obtained by
 $$P = R \cdot P^{'} + t,$$
 where $R$ is a rotation matrix and $t$ a translation vector.
-Detailed information can be found [here](https://media.dectris.com/DectrisGeometryDocumentation.pdf).
+Detailed information can be found in the Geometry section of the API documentation.
 
 Please also refer to the [_NXtransformations_](https://manual.nexusformat.org/classes/base_classes/NXtransformations.html#nxtransformations) documentation for further details on the representation of transformations and the `depens_on`-chain.
 
