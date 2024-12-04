@@ -1,15 +1,15 @@
-# FileWriter V2
+# FileWriter
 
-FileWriter writes image data and metadata to [HDF5](https://www.hdfgroup.org/solutions/hdf5/) files. Currently, there are two different formats available. V1 is a legacy format that follows [version 1.4](https://github.com/nexusformat/definitions/releases/tag/NXmx-1.4) of the _NXmx application definition_ of the [NeXus](https://manual.nexusformat.org) format. V2 follows the [_NXmx application definition_](https://manual.nexusformat.org/classes/applications/NXmx.html) of NeXus Version 2024.02.
+FileWriter writes image data and metadata to [HDF5](https://www.hdfgroup.org/solutions/hdf5/) files. Currently, there are two different formats available. One is a legacy format that follows [version 1.4](https://github.com/nexusformat/definitions/releases/tag/NXmx-1.4) of the _NXmx application definition_ of the [NeXus](https://manual.nexusformat.org) format. The second one follows the [_NXmx application definition_](https://manual.nexusformat.org/classes/applications/NXmx.html) of NeXus Version 2024.02, this is the format described in this document.
 
-| Version | Configuration | NeXus/NXmx Version | Multi-Channel Data |
+| Format | Configuration | NeXus/NXmx Version | Multi-Channel Data |
 |----|----|----|----|
-| V1 | SIMPLON | [NeXus 3.2 NXmx (2016)](https://github.com/nexusformat/definitions/blob/main/legacy_docs/nexus-v3.2-2016-11-22-32b130a.pdf) | No |
-| V2 | SIMPLON | [NeXus v2024.02 NXmx](https://github.com/nexusformat/definitions/blob/v2024.02/applications/NXmx.nxdl.xml) | Yes |
+| `"hdf5 nexus legacy nxmx"` | SIMPLON | [NeXus 3.2 NXmx (2016)](https://github.com/nexusformat/definitions/blob/main/legacy_docs/nexus-v3.2-2016-11-22-32b130a.pdf) | No |
+| `"hdf5 nexus v2024.2 nxmx"` | SIMPLON | [NeXus v2024.02 NXmx](https://github.com/nexusformat/definitions/blob/v2024.02/applications/NXmx.nxdl.xml) | Yes |
 
-## FileWriter V2 Configuration
+## FileWriter Configuration
 
-FileWriter V2 can be enabled and configured using the SIMPLON API.
+FileWriter can be enabled and configured using the SIMPLON API.
 
 ### SIMPLON Configuration Parameters
 
@@ -22,11 +22,11 @@ The configuration interface is accessible at `http://<ADDRESS_OF_DCU>/filewriter
 | `image_nr_start` | number | `1` | Unsigned integer defining the first image id on the axis `/entry/image_id`. |
 | `name_pattern` | string | `"series_$id"` | Base name of the files. `$id` will be replaced by the series id, i.e. using the default, the generated files will have the names:<br> `series_<series_id>_master.h5`<br> `series_<series_id>_data_<file_number>.h5`|
 | `nimages_per_file` | number | `1000` | Unsigned integer defining the maximum number of images stored in each data file. If set to `0`, all images are stored directly in the master file and no data files are created. If set to a value greater than zero, the images are stored in multiple data files. |
-| `format` | string | `"hdf5 nexus legacy nxmx"` | Format of the files.<br /><ul><li>`"hdf5 nexus legacy nxmx"`: HDF5 files where the metadata of the master file is following the NXmx application definition of the NeXus 3.2 (2016) standard. (FileWriter V1).</li><li>`"hdf5 nexus v2024.2 nxmx"`: HDF5 files where the metadata of the master file is following the NXmx application definition of the NeXus v2024.2 standard. (FileWriter V2).</li></ul> |
+| `format` | string | `"hdf5 nexus legacy nxmx"` | Format of the files.<br /><ul><li>`"hdf5 nexus legacy nxmx"`: HDF5 files where the metadata of the master file is following the NXmx application definition of the NeXus 3.2 (2016) standard.</li><li>`"hdf5 nexus v2024.2 nxmx"`: HDF5 files where the metadata of the master file is following the NXmx application definition of the NeXus v2024.2 standard.</li></ul> |
 
 ### Example
 
-FileWriter V2 may be configured with cURL.
+FileWriter may be configured with cURL.
 
 ```sh
 curl \
@@ -57,7 +57,7 @@ For further details on available commands and status parameters please refer to 
 
 ## Multi-Channel Data
 
-One of the main new features of FileWriter V2 is the support of multi-channel data, i.e. each image consists of multiple channels, one per enabled threshold/difference mode. The dataset `/entry/data/data` is four-dimensional with shape `[nP, nC, i, j]`, the notation used is defined [here](#notation). The channels are identified via strings given in the `channel` [axis](https://manual.nexusformat.org/classes/base_classes/NXdata.html#nxdata-axisname-field) of the _NXdata_ class. For every channel name listed in this field, there exists a subgroup of the [_NXdetector_](https://manual.nexusformat.org/classes/base_classes/NXdetector.html) group of type [_NXdetector_channel_](https://manual.nexusformat.org/classes/base_classes/NXdetector_channel.html#nxdetector-channel) with the same name followed by the suffix `_channel`. This group contains channel-specific metadata, for example `threshold_energy`, `flatfield` or `pixel_mask`.
+One of the main new features of the `"hdf5 nexus v2024.2 nxmx"` format is the support of multi-channel data, i.e. each image consists of multiple channels, one per enabled threshold/difference mode. The dataset `/entry/data/data` is four-dimensional with shape `[nP, nC, i, j]`, the notation used is defined [here](#notation). The channels are identified via strings given in the `channel` [axis](https://manual.nexusformat.org/classes/base_classes/NXdata.html#nxdata-axisname-field) of the _NXdata_ class. For every channel name listed in this field, there exists a subgroup of the [_NXdetector_](https://manual.nexusformat.org/classes/base_classes/NXdetector.html) group of type [_NXdetector_channel_](https://manual.nexusformat.org/classes/base_classes/NXdetector_channel.html#nxdetector-channel) with the same name followed by the suffix `_channel`. This group contains channel-specific metadata, for example `threshold_energy`, `flatfield` or `pixel_mask`.
 
 An _NXdetector_channel_ group could contain every field that is allowed for NXdetector and that makes sense to be given per channel.
 
@@ -92,7 +92,7 @@ detector: NXdetector
 
 ## File Structure
 
-A FileWriter V2 file is structured into the following (HDF5) groups:
+A FileWriter file following the `"hdf5 nexus v2024.2 nxmx"` format is structured into the following (HDF5) groups:
 
 ```
 /
@@ -122,7 +122,7 @@ A FileWriter V2 file is structured into the following (HDF5) groups:
 
 ## List of Fields
 
-A file generated within V2 format may contain the fields and attributes listed below. For further details and descriptions please refer to the provided links to the NeXus definitions.
+A file generated within `"hdf5 nexus v2024.2 nxmx"` format may contain the fields and attributes listed below. For further details and descriptions please refer to the provided links to the NeXus definitions.
 
 #### Notation
 
@@ -172,7 +172,7 @@ Describes the plottable data and related dimension scales. Please also refer to 
 | [image_id](https://manual.nexusformat.org/classes/base_classes/NXdata.html#nxdata-axisname-field) | NX_CHAR_OR_NUMBER[] | Dimension scale defining the axis `image_id` of the data, typically this is `[1, ..., nP]`. |
 | [start_time](https://manual.nexusformat.org/classes/base_classes/NXdata.html#nxdata-axisname-field) | NX_CHAR_OR_NUMBER[] | Dimension scale defining the axis `start_time` of the data. These are the relative start times for all images with absolute reference `/entry/start_time`. |
 | [channel](https://manual.nexusformat.org/classes/base_classes/NXdata.html#nxdata-axisname-field) | NX_CHAR_OR_NUMBER[] | Dimension scale defining the axis `channel` of the data. These are the enabled channels, for example `["threshold_1", "threshold_2", "difference"]`. |
-| [data](https://manual.nexusformat.org/classes/applications/NXmx.html#nxmx-entry-data-data-field) | NX_NUMBER[nP,nC,i,j] | The image data.<br> **Note:** Files in V2 format always have only one `"/entry/data/data"` dataset, even in case `nimages_per_file` is greater than `0`. This is because it is a [Virtual Dataset](https://portal.hdfgroup.org/display/HDF5/Virtual+Dataset++-+VDS). |
+| [data](https://manual.nexusformat.org/classes/applications/NXmx.html#nxmx-entry-data-data-field) | NX_NUMBER[nP,nC,i,j] | The image data.<br> **Note:** Files in `"hdf5 nexus v2024.2 nxmx"` format always have only one `"/entry/data/data"` dataset, even in case `nimages_per_file` is greater than `0`. This is because it is a [Virtual Dataset](https://portal.hdfgroup.org/display/HDF5/Virtual+Dataset++-+VDS). |
 
 ## [/entry/instrument](https://manual.nexusformat.org/classes/applications/NXmx.html#nxmx-entry-instrument-group)
 
