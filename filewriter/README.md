@@ -88,6 +88,7 @@ detector: NXdetector
     pixel_mask = uint[i, j]
   difference_channel: NXdetector_channel
     threshold_energy = float[2]
+    pixel_mask = uint[i, j]
 ```
 
 ## File Structure
@@ -252,7 +253,7 @@ For every channel enabled, there will be one _NXdetector_channel_ group containi
 |---|---|---|
 | @NX_class | NX_CHAR | [`"NXdetector_channel"`](https://manual.nexusformat.org/classes/base_classes/NXdetector.html#nxdetector-channelname-channel-group) |
 | flatfield | NX_FLOAT[] | The flatfield applied to the channel data. |
-| pixel_mask | NX_UINT[] | The pixel mask applied to the channel data. |
+| pixel_mask | NX_UINT[] | The pixel mask applied to the channel data. In case of difference mode, this is a combination of the pixel masks corresponding to the upper and lower threshold, i.e. $p_{diff}[i] = p_{lower}[i] \| p_{upper}[i]$. |
 | threshold_energy | NX_FLOAT or NX_FLOAT[2] | The threshold energy for this channel. In case of difference mode, this is an array containing both the upper and lower threshold energies. |
 | threshold_energy@units | NX_ENERGY | `"eV"` |
 
