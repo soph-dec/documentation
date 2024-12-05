@@ -18,7 +18,7 @@ The configuration interface is accessible at `http://<ADDRESS_OF_DCU>/filewriter
 | Parameter | JSON Type | Default | Description |
 |-----------|------|---------|-------------|
 | `mode` | string | `"disabled"` | Enabled state of the FileWriter, either `"enabled"` or `"disabled"`. |
-| `compression_enabled` | boolean | `true` | Optionally disable compression of image data. |
+| `compression_enabled` | boolean | `true` | Optionally disable compression of image data.<br> **Note:** Compression is required for full detector performance, disabling compression may lead to data loss at high frame rates. |
 | `image_nr_start` | number | `1` | Unsigned integer defining the first image id on the axis `/entry/image_id`. |
 | `name_pattern` | string | `"series_$id"` | Base name of the files. `$id` will be replaced by the series id, i.e. using the default, the generated files will have the names:<br> `series_<series_id>_master.h5`<br> `series_<series_id>_data_<file_number>.h5`|
 | `nimages_per_file` | number | `1000` | Unsigned integer defining the maximum number of images stored in each data file. If set to `0`, all images are stored directly in the master file and no data files are created. If set to a value greater than zero, the images are stored in multiple data files. |
