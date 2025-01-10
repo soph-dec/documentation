@@ -1,0 +1,8 @@
+[book]
+language = "en"
+multilingual = false
+src = "."
+title = "DECTRIS Documentation"
+
+[preprocessor.katex]
+after = ["links"]
